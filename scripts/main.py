@@ -23,3 +23,18 @@ def RNA_prot(seq): #פוקציה שמקבלת רצף רנא ומתרגמת או�
     Amino = RNA_codon_table[codon] #מציאת החומצת אמינו באמצעות המילון
     prot_seq += Amino
   return prot_seq
+
+def Mutate_DNA(seq): #פונקציה שמקבלת רצף דנא ומחליפה נוקלאוטיד לנוקלאוטיד אחר במקום רנדומלי
+  new_seq = ''
+  base_list = ['A', 'C', 'G', 'T']
+  seq = seq.upper()
+  ran_place = random.randrange(0, len(seq)) #הגרלת מקום רנדומלי
+  ran_nuc = seq[ran_place] #הנוקלאוטיד במקום הרנדומלי שנבחר
+  base_list.remove(ran_nuc) #מחיקת הנוקלאוטיד שנבחר מרשימת הנוקלאוטיד
+  ran_base = random.randrange(0,len(base_list)) #הגרלת בסיס רנדומלי
+  new_nuc = base_list[ran_base] 
+
+  seq_1 = seq[0 : ran_place]
+  seq_2 = seq[ran_place + 1 :] 
+  new_seq = seq_1 + new_nuc + seq_2 #יצירת הרצף עם הנוקלאוטיד החדש
+  return new_seq

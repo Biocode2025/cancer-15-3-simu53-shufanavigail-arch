@@ -1,3 +1,5 @@
+import random
+
 def DNA_RNA_Cod(seq): #פונקציה שמקבלת רצף מקודד והופכת אותו לרנא
   RNA_seq = ''
   seq = seq.upper()
@@ -45,3 +47,28 @@ def Comp_seq(old,new): #פונקציה שמקבלת שני רצפים ומחזי
     if old[i] != new[i]: #אם הרצף במקום הi שונה מהרצף השני באותו מקום מוסיף לספירת ההבדלים 1
       diff_count += 1
   return diff_count
+
+def Insert_DNA(seq):
+    base_list = ['A', 'C', 'G', 'T']
+    seq = seq.upper()
+    nuc_num = random.randrange(1, 4)  # הגרלת מספר הנוקלאוטידים להוספה
+    ran_place = random.randrange(0, len(seq))  # הגרלת מקום רנדומלי
+    if nuc_num == 1:
+        ran_nuc = seq[ran_place] #הנוקלאוטיד במקום הרנדומלי שנבחר
+        ran_base = random.randrange(0, len(base_list))
+        new_nuc = base_list[ran_base]
+    elif nuc_num == 2:
+        new_nuc = ''
+        for i in range(2):
+            ran_base = random.randrange(0, len(base_list))
+            new_nuc += base_list[ran_base]
+    else:
+        new_nuc = ''
+        for i in range(3):
+            ran_base = random.randrange(0, len(base_list))
+            new_nuc += base_list[ran_base]
+            
+    seq_1 = seq[0: ran_place]
+    seq_2 = seq[ran_place :]
+    new_seq = seq_1 + new_nuc + seq_2
+    return new_seq

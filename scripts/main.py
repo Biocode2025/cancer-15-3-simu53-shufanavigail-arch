@@ -67,8 +67,18 @@ def Insert_DNA(seq):
         for i in range(3):
             ran_base = random.randrange(0, len(base_list))
             new_nuc += base_list[ran_base]
-            
+
     seq_1 = seq[0: ran_place]
     seq_2 = seq[ran_place :]
     new_seq = seq_1 + new_nuc + seq_2
     return new_seq
+
+def Delete_DNA(seq):
+    seq = seq.upper()
+    nuc_num = random.randrange(1, 4)  # הגרלת מספר הנוקלאוטידים למחיקה
+    ran_place = random.randrange(0, len(seq) - nuc_num)  # הגרלת מקום רנדומלי
+    seq_1 = seq[0: ran_place]
+    seq_2 = seq[ran_place + nuc_num:] 
+    new_seq = seq_1 + seq_2
+    return new_seq
+  

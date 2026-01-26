@@ -82,3 +82,8 @@ def Delete_DNA(seq):
     new_seq = seq_1 + seq_2
     return new_seq
   
+gen = 1000
+RNA_codon_table = {}
+dna_file = open('data/human_p53_coding.txt ', 'r')
+codon_file = open('data/codon_AA.txt', 'r')
+

@@ -54,7 +54,6 @@ def Insert_DNA(seq):
     nuc_num = random.randrange(1, 4)  # הגרלת מספר הנוקלאוטידים להוספה
     ran_place = random.randrange(0, len(seq))  # הגרלת מקום רנדומלי
     if nuc_num == 1:
-        ran_nuc = seq[ran_place] #הנוקלאוטיד במקום הרנדומלי שנבחר
         ran_base = random.randrange(0, len(base_list))
         new_nuc = base_list[ran_base]
     elif nuc_num == 2:
@@ -81,9 +80,54 @@ def Delete_DNA(seq):
     seq_2 = seq[ran_place + nuc_num:] 
     new_seq = seq_1 + seq_2
     return new_seq
-  
+
 gen = 1000
 RNA_codon_table = {}
-dna_file = open('data/human_p53_coding.txt ', 'r')
+gen_count = 1
+diff_count = 0
+overall_gen = 0
+dna_file = open('data/human_p53_coding.txt', 'r')
 codon_file = open('data/codon_AA.txt', 'r')
+dna_seq = ''
+#main#
+for line in dna_file:
+  if line[0] != ">":
+    line = line.rstrip('\n')
+    dna_seq += line
+Read_dict(codon_file)
 
+rna_seq = DNA_RNA_Cod(dna_seq)
+prot_seq = RNA_prot(rna_seq)
+
+
+for i in range(gen):
+    diff_count = 0    
+    gen_count = 1        
+    mutated_dna = dna_seq 
+    while diff_count == 0:
+        chance = random.randrange(1, 101) #הגרלת מספר בין 1 ל100 כדי לקבוע איזה סוג מוטציה תתבצע
+        if chance <= 98:
+            mutated_dna = Mutate_DNA(mutated_dna)
+        elif chance == 99:
+            mutated_dna = Insert_DNA(mutated_dna)
+        else:
+            mutated_dna = Delete_DNA(mutated_dna)
+            
+        remain = len(mutated_dna) % 3 # מחזיר את השארית אם הרצף לא מתחלק בשלוש כדי להוות את הנוקלאוטידים שנשארים 
+        mutated_dna = mutated_dna[0:len(mutated_dna) - remain]
+        mutated_rna = DNA_RNA_Cod(mutated_dna)
+        mutated_prot = RNA_prot(mutated_rna)
+        if len(mutated_prot) != len(prot_seq):
+            diff_count += 1
+        else:
+            diff_count = Comp_seq(prot_seq, mutated_prot)
+            if diff_count == 0:
+                gen_count += 1
+    overall_gen += gen_count
+        
+
+print(overall_gen)
+print("Average number of generations until protein change: %d" %(round(overall_gen / gen)))
+
+dna_file.close()
+codon_file.close()

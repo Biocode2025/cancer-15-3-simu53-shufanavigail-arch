@@ -101,28 +101,29 @@ prot_seq = RNA_prot(rna_seq)
 
 
 for i in range(gen):
-    diff_count = 0    
-    gen_count = 1        
-    mutated_dna = dna_seq 
+    diff_count = 0
+    gen_count = 0
+    mutated_dna = dna_seq  
     while diff_count == 0:
-        chance = random.randrange(1, 101) #הגרלת מספר בין 1 ל100 כדי לקבוע איזה סוג מוטציה תתבצע
-        if chance <= 98:
-            mutated_dna = Mutate_DNA(mutated_dna)
-        elif chance == 99:
-            mutated_dna = Insert_DNA(mutated_dna)
-        else:
-            mutated_dna = Delete_DNA(mutated_dna)
-            
-        remain = len(mutated_dna) % 3 # מחזיר את השארית אם הרצף לא מתחלק בשלוש כדי להוות את הנוקלאוטידים שנשארים 
-        mutated_dna = mutated_dna[0:len(mutated_dna) - remain]
-        mutated_rna = DNA_RNA_Cod(mutated_dna)
-        mutated_prot = RNA_prot(mutated_rna)
-        if len(mutated_prot) != len(prot_seq):
-            diff_count += 1
-        else:
-            diff_count = Comp_seq(prot_seq, mutated_prot)
-            if diff_count == 0:
-                gen_count += 1
+         gen_count += 1
+         mutation = random.randrange(1, 10001) #הגרלת מספר בין 1 ל10000 כדי לקבוע אם תתבצע מוטציה
+         if mutation == 1:       
+             chance = random.randrange(1, 101) #הגרלת מספר בין 1 ל100 כדי לקבוע איזה סוג מוטציה תתבצע
+             if chance <= 98:
+                 mutated_dna = Mutate_DNA(mutated_dna)
+             elif chance == 99:
+                 mutated_dna = Insert_DNA(mutated_dna)
+             else:
+                 mutated_dna = Delete_DNA(mutated_dna)
+                
+             remain = len(mutated_dna) % 3 # מחזיר את השארית אם הרצף לא מתחלק בשלוש כדי להוות את הנוקלאוטידים שנשארים 
+             mutated_dna = mutated_dna[0:len(mutated_dna) - remain]
+             mutated_rna = DNA_RNA_Cod(mutated_dna)
+             mutated_prot = RNA_prot(mutated_rna)
+             if len(mutated_prot) != len(prot_seq):
+                 diff_count += 1
+             else:
+                 diff_count = Comp_seq(prot_seq, mutated_prot)
     overall_gen += gen_count
         
 

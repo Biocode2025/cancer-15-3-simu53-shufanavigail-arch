@@ -128,7 +128,7 @@ for i in range(gen):
         
 
 print(overall_gen)
-print("Average number of generations until protein change: %d" %(round(overall_gen / gen)))
+print("Average number of dna replications until mutation that resulted in protein change: %d" %(round(overall_gen / gen)))
 
 dna_file.close()
 codon_file.close()
